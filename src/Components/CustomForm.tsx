@@ -33,6 +33,7 @@ function CustomForm() {
       lastName: "",
       gender: "",
       dateOfBirth: "",
+      techStack: [],
     },
   });
 
@@ -47,7 +48,7 @@ function CustomForm() {
       <h1 className="title">Basic Details</h1>
       <div className="form-container">
         <div className="form-Basic-details">
-          <div>
+          <div className="form-element">
             <label>First Name</label>
             <input
               placeholder="First Name"
@@ -58,7 +59,7 @@ function CustomForm() {
               })}
             />
           </div>
-          <div>
+          <div className="form-element">
             <label>Last Name</label>
             <input
               placeholder="Last Name"
@@ -72,7 +73,7 @@ function CustomForm() {
         </div>
         <h1 className="title">Other Information</h1>
         <div className="form-other-details">
-          <div>
+          <div className="form-element">
             <label>Gender</label>
             <Select
               className="genderSelect"
@@ -87,21 +88,25 @@ function CustomForm() {
               }}
             />
           </div>
-          <div>
+          <div className="form-element">
             <label>Date of Birth</label>
-            <input {...register("dateOfBirth")} />
+            <input
+              type="date"
+              placeholder="Date"
+              {...register("dateOfBirth")}
+            />
           </div>
         </div>
         <div className="form-tech-stack">
           <div>
             <label>Tech Stack</label>
-            <input {...register("techStack")} />
+            <input placeholder="Enter tech stack" {...register("techStack")} />
           </div>
           {/* <div className="form-tech-list">{techList}</div> */}
         </div>
         {errors.exampleRequired && <p>This field is required</p>}
       </div>
-      <input type="submit" />
+      <input type="submit" value="Submit" className="submit-btn" />
     </form>
   );
 }

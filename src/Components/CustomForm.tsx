@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Select } from "chakra-react-select";
 import { useRef } from "react";
+import { AddIcon } from "@chakra-ui/icons";
 
 import "./CustomForm.css";
 
@@ -14,7 +15,7 @@ const defaultValue = [
 const defaultOptions = [
   { value: "male", label: "Male", color: "white" },
   { value: "female", label: "Female" },
-  { value: "yourChoice", label: "Your Choice" },
+  { value: "other", label: "Other" },
 ];
 
 function CustomForm() {
@@ -37,7 +38,7 @@ function CustomForm() {
     },
   });
 
-  console.log("testString", errors); // you can watch individual input by pass the name of the input
+  console.log("testString", errors, getValues("gender")); // you can watch individual input by pass the name of the input
 
   return (
     <form
@@ -99,14 +100,28 @@ function CustomForm() {
         </div>
         <div className="form-tech-stack">
           <div>
-            <label>Tech Stack</label>
-            <input placeholder="Enter tech stack" {...register("techStack")} />
+            <div className="tech-stack_header">
+              <label>Tech Stack</label>
+              <AddIcon boxSize={4} />
+            </div>
+            <input
+              type="text"
+              placeholder="Enter tech stack"
+              {...register("techStack")}
+            />
           </div>
-          {/* <div className="form-tech-list">{techList}</div> */}
+          <div className="form-tech-list">{techList}</div>
         </div>
-        {errors.exampleRequired && <p>This field is required</p>}
       </div>
-      <input type="submit" value="Submit" className="submit-btn" />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "flex-end",
+        }}
+      >
+        <input type="submit" value="Submit" className="submit-btn" />
+      </div>
     </form>
   );
 }

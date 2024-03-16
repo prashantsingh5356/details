@@ -23,7 +23,7 @@ form {
 }
 
 .form-tech-stack > div > input {
-  width: 40%;
+  width: 60%;
 }
 .form-tech-list {
   max-height: 200px;
@@ -65,7 +65,7 @@ input {
   font-size: 14px;
   background-color: #d7d7d7;
   font-weight: bolder;
-  color: #ebebeb;
+  color: white;
 }
 
 input::placeholder {
@@ -74,7 +74,8 @@ input::placeholder {
   font-size: 18px;
 }
 
-input::-ms-input-placeholder { /* Edge 12-18 */
+input::-ms-input-placeholder {
+  /* Edge 12-18 */
   color: #ebebeb;
   font-size: 18px;
 }
@@ -110,4 +111,12 @@ hr {
 
 input[type="date"]:focus::-webkit-datetime-edit {
   color: #9fa7b3 !important;
+}
+
+.tech-stack_header {
+  /* border: 2px solid green; */
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

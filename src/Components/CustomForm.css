@@ -131,8 +131,20 @@ input[type="date"]:focus::-webkit-datetime-edit {
   color: white;
   padding: 6px 8px 6px 8px;
   border-radius: 4px;
+  margin-bottom: 8px;
 }
 
 .tech-stack_list > h2 {
   width: 80%;
+}
+
+.info-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.info-container > h4 {
+  margin-left: 5px;
+  margin-top: 8px;
 }

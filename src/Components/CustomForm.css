@@ -120,3 +120,19 @@ input[type="date"]:focus::-webkit-datetime-edit {
   align-items: center;
   justify-content: space-between;
 }
+
+.tech-stack_list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60%;
+  background-color: #d7d7d7;
+  font-weight: bolder;
+  color: white;
+  padding: 6px 8px 6px 8px;
+  border-radius: 4px;
+}
+
+.tech-stack_list > h2 {
+  width: 80%;
+}

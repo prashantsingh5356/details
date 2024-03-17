@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Select } from "chakra-react-select";
 import { useRef } from "react";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 
 import "./CustomForm.css";
 
@@ -19,7 +19,7 @@ const defaultOptions = [
 ];
 
 function CustomForm() {
-  const techList = defaultValue.map((val) => <input value={val.tech} />);
+  // const techList = defaultValue.map((val) => <input value={val.tech} />);
 
   const {
     register,
@@ -34,11 +34,21 @@ function CustomForm() {
       lastName: "",
       gender: "",
       dateOfBirth: "",
-      techStack: [],
+      techStack: "",
+      techList: [],
     },
   });
 
-  console.log("testString", errors, getValues("gender")); // you can watch individual input by pass the name of the input
+  watch("techList");
+  // watch("gender")
+  console.log("gender", getValues("gender"), errors);
+
+  const removeTechStack = (val: string) => {
+    let modifiedList = getValues("techList").filter(
+      (techStack: string) => techStack != val
+    );
+    setValue("techList", modifiedList);
+  };
 
   return (
     <form
@@ -59,6 +69,13 @@ function CustomForm() {
                   /^[a-zA-Z]+(?:-[a-zA-Z]+)*(?: [a-zA-Z]+(?:-[a-zA-Z]+)*)*$/,
               })}
             />
+            {errors?.firstName?.type && (
+              <p>
+                {errors?.firstName?.type == "required"
+                  ? "Name is required"
+                  : "Name is incorrect"}
+              </p>
+            )}
           </div>
           <div className="form-element">
             <label>Last Name</label>
@@ -70,6 +87,13 @@ function CustomForm() {
                   /^[a-zA-Z]+(?:-[a-zA-Z]+)*(?: [a-zA-Z]+(?:-[a-zA-Z]+)*)*$/,
               })}
             />
+            {errors?.lastName?.type && (
+              <p>
+                {errors?.lastName?.type == "required"
+                  ? "Name is required"
+                  : "Name is incorrect"}
+              </p>
+            )}
           </div>
         </div>
         <h1 className="title">Other Information</h1>
@@ -78,39 +102,73 @@ function CustomForm() {
             <label>Gender</label>
             <Select
               className="genderSelect"
-              name="Gender"
+              // name="Gender"
               options={defaultOptions}
               placeholder="Gender"
               closeMenuOnSelect={false}
               size="lg"
-              // value={"test"}
-              onChange={(val: any) => {
-                setValue("gender", val.label);
-              }}
+              {...register("gender", {
+                required: true,
+                onChange: (e) => console.log("g", e),
+              })}
             />
+            {errors?.gender?.type == "required" && <p>Gender is required</p>}
           </div>
           <div className="form-element">
             <label>Date of Birth</label>
             <input
               type="date"
               placeholder="Date"
-              {...register("dateOfBirth")}
+              {...register("dateOfBirth", { required: true })}
             />
+            {errors?.dateOfBirth?.type == "required" && <p>DOB is required</p>}
           </div>
         </div>
         <div className="form-tech-stack">
           <div>
             <div className="tech-stack_header">
               <label>Tech Stack</label>
-              <AddIcon boxSize={4} />
+              <AddIcon
+                boxSize={4}
+                onClick={() => {
+                  if (getValues("techStack")?.length == 0) {
+                    return;
+                  }
+                  setValue("techList", [
+                    ...getValues("techList"),
+                    getValues("techStack"),
+                  ]);
+                  setValue("techStack", "");
+                }}
+              />
             </div>
             <input
               type="text"
               placeholder="Enter tech stack"
-              {...register("techStack")}
+              {...register("techStack", {
+                required: true,
+                pattern: /^[a-zA-Z0-9_-]+(?:,[a-zA-Z0-9_-]+)*$/,
+              })}
             />
+            {errors?.techStack?.type && getValues("techList").length == 0 && (
+              <p>
+                {errors?.techStack?.type == "required"
+                  ? "Tech Stack is required"
+                  : "Invalid Tech Stack"}
+              </p>
+            )}
           </div>
-          <div className="form-tech-list">{techList}</div>
+          <div className="form-tech-list">
+            {getValues("techList").map((val, i) => (
+              <div className="tech-stack_list" key={i}>
+                <h2>{val}</h2>
+                <CloseIcon
+                  color={"black"}
+                  onClick={() => removeTechStack(val)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div
